@@ -4,7 +4,7 @@
 
 - Data snapshot: 2026-02-05
 - Fase corrente: avvio progetto (da M1.2 in poi si usa workflow Snapshot+Prompt)
-- Milestone completate: M0 (Setup macchina) ✅, M1.2 — Scaffolding Vite + React + TypeScript ✅, M1.3 — Aggiungi Tauri e verifica dev desktop ✅, M1.4 — Tooling qualità: ESLint + Prettier ✅
+- Milestone completate: M0 (Setup macchina) ✅, M1.2 — Scaffolding Vite + React + TypeScript ✅, M1.3 — Aggiungi Tauri e verifica dev desktop ✅, M1.4 — Tooling qualità: ESLint + Prettier ✅, M1.5 — Husky + lint-staged (guardrail) ✅, M1.6 — Struttura cartelle definitiva ✅
 - Prossimo task: (da backlog) successivo da definire
 
 ---
@@ -155,6 +155,36 @@ Decisioni rimandate:
 ---
 
 ## 9) Storico ultimo task completato
+
+- Task ID: M1.6 — Struttura cartelle definitiva ✅
+- Data: 2026-02-05
+- Dettagli:
+  - Create cartelle: `src/core`, `src/ui`, `docs`, `templates`, `tests`, `assets`
+  - Aggiunti placeholder `.gitkeep` per versionare directory vuote
+- Gate risultati:
+  - `npm run dev` → PASS (dev server ok)
+  - `npm run tauri dev` → PASS (app desktop ok)
+- File modificati principali:
+  - iseql-event-modeler/src/core/.gitkeep (nuovo)
+  - iseql-event-modeler/src/ui/.gitkeep (nuovo)
+  - iseql-event-modeler/templates/.gitkeep (nuovo)
+  - iseql-event-modeler/tests/.gitkeep (nuovo)
+  - iseql-event-modeler/assets/.gitkeep (nuovo)
+
+- Task ID: M1.5 — Husky + lint-staged (guardrail) ✅
+- Data: 2026-02-05
+- Dettagli:
+  - Aggiunti `husky` + `lint-staged` come devDependencies
+  - Husky CLI mostra messaggi “DEPRECATED” per comandi legacy (non bloccanti)
+  - Configurato Git hooks via `git config core.hooksPath iseql-event-modeler/.husky`
+  - Creato hook `iseql-event-modeler/.husky/pre-commit` che esegue `npx lint-staged` (con `cd iseql-event-modeler`)
+  - Aggiunto `.gitattributes` per forzare LF sugli hook/script (evita problemi CRLF su Windows)
+- Gate risultati:
+  - `git commit` con file non formattato → `lint-staged` esegue task sugli staged e applica fix (PASS)
+- File modificati principali:
+  - iseql-event-modeler/package.json (devDependencies + config lint-staged)
+  - iseql-event-modeler/.husky/pre-commit (nuovo/modificato)
+  - .gitattributes (nuovo, repo root)
 
 - Task ID: M1.4 — Tooling qualità: ESLint + Prettier ✅
 - Data: 2026-02-05
