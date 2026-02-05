@@ -1,2 +1,3 @@
 #!/bin/sh
+cd "iseql-event-modeler" || exit 1
 npx lint-staged
