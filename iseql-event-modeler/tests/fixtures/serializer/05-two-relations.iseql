@@ -1,0 +1,11 @@
+# two_relations_root_order
+# intervals: 3, relations: 2
+
+INTERVALS
+@i1: in(p1, person)
+@i2: hasPkg(p1, pkg1)
+@i3: in(p2, person)
+
+RELATIONS
+@i2 Bef (δ:2) @i3
+@i1 SP @i2

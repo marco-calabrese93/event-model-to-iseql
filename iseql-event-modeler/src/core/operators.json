@@ -1,0 +1,421 @@
+{
+  "schemaVersion": "1.0.0",
+  "parameterDefaults": {
+    "zeta": "≤",
+    "eta": "≤",
+    "delta": "∞",
+    "epsilon": "∞",
+    "rho": 0
+  },
+  "notes": [
+    "This catalog is used by Expert UI + Resolver/Validator/Serializer later.",
+    "Allen 13 relations are represented as kind='alias' mapping to base ISEQL operators.",
+    "Parameter meaning follows ISEQL literature (ζ, η comparators; δ/ε thresholds; ρ robustness slack)."
+  ],
+  "operators": [
+    {
+      "kind": "operator",
+      "id": "bef",
+      "code": "Bef",
+      "label": "Before",
+      "description": "Non-overlapping: left interval ends before right interval starts, within delta (threshold).",
+      "arity": 2,
+      "parameters": {
+        "supported": ["delta", "rho", "zeta"],
+        "defaults": { "delta": "∞", "rho": 0, "zeta": "≤" },
+        "domains": {
+          "delta": { "type": "threshold", "min": 0, "allowInfinity": true },
+          "rho": { "type": "number", "min": 0 },
+          "zeta": { "type": "comparator", "allowed": ["<", "≤", "=", "≥", ">"] }
+        }
+      },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": false,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "operator",
+      "id": "aft",
+      "code": "Aft",
+      "label": "After",
+      "description": "Reverse of Bef: left interval starts after right interval ends, within delta (threshold).",
+      "arity": 2,
+      "parameters": {
+        "supported": ["delta", "rho", "zeta"],
+        "defaults": { "delta": "∞", "rho": 0, "zeta": "≤" },
+        "domains": {
+          "delta": { "type": "threshold", "min": 0, "allowInfinity": true },
+          "rho": { "type": "number", "min": 0 },
+          "zeta": { "type": "comparator", "allowed": ["<", "≤", "=", "≥", ">"] }
+        }
+      },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": false,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "operator",
+      "id": "loj",
+      "code": "LOJ",
+      "label": "Left Overlap Join",
+      "description": "Overlapping: right interval starts not earlier than left interval start (within delta) and ends not earlier than left interval end (within epsilon), with overlap.",
+      "arity": 2,
+      "parameters": {
+        "supported": ["delta", "epsilon", "rho", "zeta", "eta"],
+        "defaults": { "delta": "∞", "epsilon": "∞", "rho": 0, "zeta": "≤", "eta": "≤" },
+        "domains": {
+          "delta": { "type": "threshold", "min": 0, "allowInfinity": true },
+          "epsilon": { "type": "threshold", "min": 0, "allowInfinity": true },
+          "rho": { "type": "number", "min": 0 },
+          "zeta": { "type": "comparator", "allowed": ["<", "≤", "=", "≥", ">"] },
+          "eta": { "type": "comparator", "allowed": ["<", "≤", "=", "≥", ">"] }
+        }
+      },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "operator",
+      "id": "roj",
+      "code": "ROJ",
+      "label": "Right Overlap Join",
+      "description": "Overlapping: symmetric counterpart of LOJ (role of operands exchanged).",
+      "arity": 2,
+      "parameters": {
+        "supported": ["delta", "epsilon", "rho", "zeta", "eta"],
+        "defaults": { "delta": "∞", "epsilon": "∞", "rho": 0, "zeta": "≤", "eta": "≤" },
+        "domains": {
+          "delta": { "type": "threshold", "min": 0, "allowInfinity": true },
+          "epsilon": { "type": "threshold", "min": 0, "allowInfinity": true },
+          "rho": { "type": "number", "min": 0 },
+          "zeta": { "type": "comparator", "allowed": ["<", "≤", "=", "≥", ">"] },
+          "eta": { "type": "comparator", "allowed": ["<", "≤", "=", "≥", ">"] }
+        }
+      },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "operator",
+      "id": "dj",
+      "code": "DJ",
+      "label": "During Join",
+      "description": "Overlapping: left interval occurs during right interval (parameterized by delta/epsilon).",
+      "arity": 2,
+      "parameters": {
+        "supported": ["delta", "epsilon", "rho", "zeta", "eta"],
+        "defaults": { "delta": "∞", "epsilon": "∞", "rho": 0, "zeta": "≤", "eta": "≤" },
+        "domains": {
+          "delta": { "type": "threshold", "min": 0, "allowInfinity": true },
+          "epsilon": { "type": "threshold", "min": 0, "allowInfinity": true },
+          "rho": { "type": "number", "min": 0 },
+          "zeta": { "type": "comparator", "allowed": ["<", "≤", "=", "≥", ">"] },
+          "eta": { "type": "comparator", "allowed": ["<", "≤", "=", "≥", ">"] }
+        }
+      },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "operator",
+      "id": "rdj",
+      "code": "RDJ",
+      "label": "Reverse During Join",
+      "description": "Overlapping: reverse counterpart of DJ (role of operands exchanged).",
+      "arity": 2,
+      "parameters": {
+        "supported": ["delta", "epsilon", "rho", "zeta", "eta"],
+        "defaults": { "delta": "∞", "epsilon": "∞", "rho": 0, "zeta": "≤", "eta": "≤" },
+        "domains": {
+          "delta": { "type": "threshold", "min": 0, "allowInfinity": true },
+          "epsilon": { "type": "threshold", "min": 0, "allowInfinity": true },
+          "rho": { "type": "number", "min": 0 },
+          "zeta": { "type": "comparator", "allowed": ["<", "≤", "=", "≥", ">"] },
+          "eta": { "type": "comparator", "allowed": ["<", "≤", "=", "≥", ">"] }
+        }
+      },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "operator",
+      "id": "sp",
+      "code": "SP",
+      "label": "Start Preceding",
+      "description": "Overlapping: left interval starts not later than right interval start, within delta.",
+      "arity": 2,
+      "parameters": {
+        "supported": ["delta", "rho", "zeta"],
+        "defaults": { "delta": "∞", "rho": 0, "zeta": "≤" },
+        "domains": {
+          "delta": { "type": "threshold", "min": 0, "allowInfinity": true },
+          "rho": { "type": "number", "min": 0 },
+          "zeta": { "type": "comparator", "allowed": ["<", "≤", "=", "≥", ">"] }
+        }
+      },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "operator",
+      "id": "ef",
+      "code": "EF",
+      "label": "End Following",
+      "description": "Overlapping: left interval ends not before right interval end, within epsilon.",
+      "arity": 2,
+      "parameters": {
+        "supported": ["epsilon", "rho", "eta"],
+        "defaults": { "epsilon": "∞", "rho": 0, "eta": "≤" },
+        "domains": {
+          "epsilon": { "type": "threshold", "min": 0, "allowInfinity": true },
+          "rho": { "type": "number", "min": 0 },
+          "eta": { "type": "comparator", "allowed": ["<", "≤", "=", "≥", ">"] }
+        }
+      },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "operator",
+      "id": "eq",
+      "code": "Eq",
+      "label": "Equals",
+      "description": "Shortcut for exact equality of intervals (typically delta=0 and epsilon=0 semantics).",
+      "arity": 2,
+      "parameters": {
+        "supported": ["rho", "zeta", "eta", "delta", "epsilon"],
+        "defaults": { "rho": 0, "zeta": "=", "eta": "=", "delta": 0, "epsilon": 0 },
+        "domains": {
+          "rho": { "type": "number", "min": 0 },
+          "zeta": { "type": "comparator", "allowed": ["="] },
+          "eta": { "type": "comparator", "allowed": ["="] },
+          "delta": { "type": "threshold", "min": 0, "allowInfinity": false },
+          "epsilon": { "type": "threshold", "min": 0, "allowInfinity": false }
+        }
+      },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": false,
+        "robustness": true
+      }
+    },
+
+    {
+      "kind": "alias",
+      "id": "allen_before",
+      "code": "Allen.Before",
+      "label": "Allen: Before",
+      "description": "Allen BEFORE alias; normalizes to Bef.",
+      "arity": 2,
+      "mapsTo": { "operatorId": "bef", "fixed": {} },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": false,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "alias",
+      "id": "allen_after",
+      "code": "Allen.After",
+      "label": "Allen: After",
+      "description": "Allen AFTER alias; normalizes to Aft.",
+      "arity": 2,
+      "mapsTo": { "operatorId": "aft", "fixed": {} },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": false,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "alias",
+      "id": "allen_meets",
+      "code": "Allen.Meets",
+      "label": "Allen: Meets",
+      "description": "Allen MEETS alias (contiguous). Approximated as Bef with delta=1 and zeta='=' on the gap.",
+      "arity": 2,
+      "mapsTo": { "operatorId": "bef", "fixed": { "delta": 1, "zeta": "=" } },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": false,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "alias",
+      "id": "allen_met_by",
+      "code": "Allen.MetBy",
+      "label": "Allen: Met-by",
+      "description": "Allen MET-BY alias (contiguous). Approximated as Aft with delta=1 and zeta='=' on the gap.",
+      "arity": 2,
+      "mapsTo": { "operatorId": "aft", "fixed": { "delta": 1, "zeta": "=" } },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": false,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "alias",
+      "id": "allen_overlaps",
+      "code": "Allen.Overlaps",
+      "label": "Allen: Overlaps",
+      "description": "Allen OVERLAPS alias; normalizes to SP (starts not later) + overlap; Resolver may refine to LOJ/DJ based on geometry.",
+      "arity": 2,
+      "mapsTo": { "operatorId": "sp", "fixed": {} },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "alias",
+      "id": "allen_overlapped_by",
+      "code": "Allen.OverlappedBy",
+      "label": "Allen: Overlapped-by",
+      "description": "Allen OVERLAPPED-BY alias; reverse of Overlaps; kept as EF placeholder; Resolver may swap/refine.",
+      "arity": 2,
+      "mapsTo": { "operatorId": "ef", "fixed": {} },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "alias",
+      "id": "allen_starts",
+      "code": "Allen.Starts",
+      "label": "Allen: Starts",
+      "description": "Allen STARTS alias; modeled as DJ with delta=0 and zeta='=' on start alignment (Resolver may enforce).",
+      "arity": 2,
+      "mapsTo": { "operatorId": "dj", "fixed": { "delta": 0, "zeta": "=" } },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "alias",
+      "id": "allen_started_by",
+      "code": "Allen.StartedBy",
+      "label": "Allen: Started-by",
+      "description": "Allen STARTED-BY alias; reverse of Starts; modeled as RDJ with delta=0 and zeta='=' on start alignment.",
+      "arity": 2,
+      "mapsTo": { "operatorId": "rdj", "fixed": { "delta": 0, "zeta": "=" } },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "alias",
+      "id": "allen_during",
+      "code": "Allen.During",
+      "label": "Allen: During",
+      "description": "Allen DURING alias; normalizes to DJ.",
+      "arity": 2,
+      "mapsTo": { "operatorId": "dj", "fixed": {} },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "alias",
+      "id": "allen_contains",
+      "code": "Allen.Contains",
+      "label": "Allen: Contains",
+      "description": "Allen CONTAINS alias; normalizes to RDJ.",
+      "arity": 2,
+      "mapsTo": { "operatorId": "rdj", "fixed": {} },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "alias",
+      "id": "allen_finishes",
+      "code": "Allen.Finishes",
+      "label": "Allen: Finishes",
+      "description": "Allen FINISHES alias; modeled as DJ with epsilon=0 and eta='=' on end alignment (Resolver may enforce).",
+      "arity": 2,
+      "mapsTo": { "operatorId": "dj", "fixed": { "epsilon": 0, "eta": "=" } },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "alias",
+      "id": "allen_finished_by",
+      "code": "Allen.FinishedBy",
+      "label": "Allen: Finished-by",
+      "description": "Allen FINISHED-BY alias; reverse of Finishes; modeled as RDJ with epsilon=0 and eta='=' on end alignment.",
+      "arity": 2,
+      "mapsTo": { "operatorId": "rdj", "fixed": { "epsilon": 0, "eta": "=" } },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": true,
+        "robustness": true
+      }
+    },
+    {
+      "kind": "alias",
+      "id": "allen_equals",
+      "code": "Allen.Equals",
+      "label": "Allen: Equals",
+      "description": "Allen EQUALS alias; normalizes to Eq.",
+      "arity": 2,
+      "mapsTo": { "operatorId": "eq", "fixed": {} },
+      "parameters": { "supported": [], "defaults": {}, "domains": {} },
+      "constraintCompatibility": {
+        "cardinality": true,
+        "overlapPercentage": false,
+        "robustness": true
+      }
+    }
+  ]
+}

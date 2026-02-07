@@ -1,0 +1,26 @@
+{
+  "id": "m05",
+  "name": "two_relations_root_order",
+  "intervals": [
+    { "id": "i1", "predicate": { "name": "in", "args": ["p1", "person"] } },
+    { "id": "i2", "predicate": { "name": "hasPkg", "args": ["p1", "pkg1"] } },
+    { "id": "i3", "predicate": { "name": "in", "args": ["p2", "person"] } }
+  ],
+  "constraints": [
+    {
+      "id": "c1",
+      "leftIntervalId": "i1",
+      "rightIntervalId": "i2",
+      "operatorId": "SP",
+      "params": { "delta": "∞" }
+    },
+    {
+      "id": "c2",
+      "leftIntervalId": "i2",
+      "rightIntervalId": "i3",
+      "operatorId": "Bef",
+      "params": { "delta": 2 }
+    }
+  ],
+  "temporalExpression": { "constraintIds": ["c2", "c1"] }
+}

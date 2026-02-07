@@ -1,0 +1,9 @@
+# bef_delta_included
+# intervals: 2, relations: 1
+
+INTERVALS
+@i1: in(p1, person)
+@i2: in(p2, person)
+
+RELATIONS
+@i1 Bef (δ:3) @i2

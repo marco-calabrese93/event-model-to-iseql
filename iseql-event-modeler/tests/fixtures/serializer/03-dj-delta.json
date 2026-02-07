@@ -1,0 +1,18 @@
+{
+  "id": "m03",
+  "name": "dj_delta_only",
+  "intervals": [
+    { "id": "i1", "predicate": { "name": "hasPkg", "args": ["p1", "pkg1"] } },
+    { "id": "i2", "predicate": { "name": "hasPkg", "args": ["p2", "pkg1"] } }
+  ],
+  "constraints": [
+    {
+      "id": "c1",
+      "leftIntervalId": "i1",
+      "rightIntervalId": "i2",
+      "operatorId": "DJ",
+      "params": { "delta": 4, "epsilon": "∞" }
+    }
+  ],
+  "temporalExpression": { "constraintIds": ["c1"] }
+}

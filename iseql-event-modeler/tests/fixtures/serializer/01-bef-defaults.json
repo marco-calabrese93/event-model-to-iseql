@@ -1,0 +1,18 @@
+{
+  "id": "m01",
+  "name": "bef_defaults_omitted",
+  "intervals": [
+    { "id": "i1", "predicate": { "name": "hasPkg", "args": ["p1", "pkg1"] } },
+    { "id": "i2", "predicate": { "name": "hasPkg", "args": ["p2", "pkg1"] } }
+  ],
+  "constraints": [
+    {
+      "id": "c1",
+      "leftIntervalId": "i1",
+      "rightIntervalId": "i2",
+      "operatorId": "Bef",
+      "params": { "delta": "∞", "zeta": "≤", "eta": "≤", "epsilon": "∞", "rho": 0 }
+    }
+  ],
+  "temporalExpression": { "constraintIds": ["c1"] }
+}

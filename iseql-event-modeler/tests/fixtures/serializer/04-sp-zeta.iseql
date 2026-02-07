@@ -1,0 +1,9 @@
+# sp_with_comparator
+# intervals: 2, relations: 1
+
+INTERVALS
+@i1: in(p1, person)
+@i2: hasPkg(p1, pkg1)
+
+RELATIONS
+@i1 SP (ζ:<, δ:1) @i2

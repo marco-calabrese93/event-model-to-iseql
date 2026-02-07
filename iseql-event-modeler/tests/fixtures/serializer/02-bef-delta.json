@@ -1,0 +1,18 @@
+{
+  "id": "m02",
+  "name": "bef_delta_included",
+  "intervals": [
+    { "id": "i1", "predicate": { "name": "in", "args": ["p1", "person"] } },
+    { "id": "i2", "predicate": { "name": "in", "args": ["p2", "person"] } }
+  ],
+  "constraints": [
+    {
+      "id": "c1",
+      "leftIntervalId": "i1",
+      "rightIntervalId": "i2",
+      "operatorId": "Bef",
+      "params": { "delta": 3 }
+    }
+  ],
+  "temporalExpression": { "constraintIds": ["c1"] }
+}

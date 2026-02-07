@@ -1,0 +1,9 @@
+# dj_delta_only
+# intervals: 2, relations: 1
+
+INTERVALS
+@i1: hasPkg(p1, pkg1)
+@i2: hasPkg(p2, pkg1)
+
+RELATIONS
+@i1 DJ (δ:4) @i2

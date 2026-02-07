@@ -1,0 +1,18 @@
+{
+  "id": "m04",
+  "name": "sp_with_comparator",
+  "intervals": [
+    { "id": "i1", "predicate": { "name": "in", "args": ["p1", "person"] } },
+    { "id": "i2", "predicate": { "name": "hasPkg", "args": ["p1", "pkg1"] } }
+  ],
+  "constraints": [
+    {
+      "id": "c1",
+      "leftIntervalId": "i1",
+      "rightIntervalId": "i2",
+      "operatorId": "SP",
+      "params": { "zeta": "<", "delta": 1 }
+    }
+  ],
+  "temporalExpression": { "constraintIds": ["c1"] }
+}
