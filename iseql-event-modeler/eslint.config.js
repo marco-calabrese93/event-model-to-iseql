@@ -15,6 +15,10 @@ export default tseslint.config(
       "src-tauri/gen/**",
       "src-tauri/.tauri/**",
       ".turbo/**",
+
+      // Playwright artifacts
+      "playwright-report/**",
+      "test-results/**",
     ],
   },
 
@@ -37,13 +41,8 @@ export default tseslint.config(
       "react-refresh": reactRefresh,
     },
     rules: {
-      // React Hooks (must-have)
       ...reactHooks.configs.recommended.rules,
-
-      // Vite + React Fast Refresh safety
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
-
-      // Common TS/React ergonomics
       "@typescript-eslint/no-unused-vars": [
         "warn",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
